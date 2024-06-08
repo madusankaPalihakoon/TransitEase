@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,12 +22,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post("register", [ApiController::class, "register"]);
-Route::post("login", [ApiController::class, "login"]);
+Route::post("register", [AuthController::class, "register"]);
+Route::post("login", [AuthController::class, "login"]);
 
-Route::middleware('auth:api')->get('/profile', [ApiController::class, 'profile']);
-Route::middleware('auth:api')->get('/refresh', [ApiController::class, 'refreshToken']);
-Route::middleware('auth:api')->get('/logout', [ApiController::class, 'logout']);
+Route::middleware('auth:api')->get('/profile', [AuthController::class, 'profile']);
+Route::middleware('auth:api')->get('/refresh', [AuthController::class, 'refreshToken']);
+Route::middleware('auth:api')->get('/logout', [AuthController::class, 'logout']);
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     return $request->fulfill();
