@@ -5,11 +5,12 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    nic: "",
     password: "",
     password_confirmation: "",
   });
 
-  const { name, email, password, password_confirmation } = formData;
+  const { name, email, nic, password, password_confirmation } = formData;
 
   const handleChange = (e) => {
     setFormData({
@@ -25,7 +26,7 @@ const Signup = () => {
       return;
     }
     try {
-      const response = await API.post("/auth/register", formData);
+      const response = await API.post("/register", formData);
       console.log("Registration successful", response.data);
       // Handle success, e.g., redirect or show a success message
     } catch (error) {
@@ -39,7 +40,7 @@ const Signup = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg">
+      <div className="w-full max-w-lg p-8 space-y-2 bg-white shadow-md rounded-lg">
         <h2 className="text-2xl font-bold text-center">Sign Up</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -47,7 +48,7 @@ const Signup = () => {
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
             >
-              Name
+              Full Name
             </label>
             <input
               type="text"
@@ -71,6 +72,23 @@ const Signup = () => {
               name="email"
               id="email"
               value={email}
+              onChange={handleChange}
+              className="w-full px-3 py-2 mt-1 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="nic"
+              className="block text-sm font-medium text-gray-700"
+            >
+              NIC
+            </label>
+            <input
+              type="text"
+              name="nic"
+              id="nic"
+              value={nic}
               onChange={handleChange}
               className="w-full px-3 py-2 mt-1 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
@@ -117,6 +135,14 @@ const Signup = () => {
             Sign Up
           </button>
         </form>
+        <div className="w-full grid justify-center">
+          <span>
+            If you alrady have an account please login{" "}
+            <a className=" text-blue-700 font-semibold" href="login">
+              here
+            </a>
+          </span>
+        </div>
       </div>
     </div>
   );

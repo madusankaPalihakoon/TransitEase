@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'api',
+        'guard' => 'web',
         'passwords' => 'users',
     ],
 
@@ -43,8 +43,14 @@ return [
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
-            'hash' => false,
         ],
+    ],
+
+    'verify' => [
+        'driver' => 'session',
+        'provider' => 'users',
+        'expire' => 60,
+        'throttle' => 60,
     ],
 
     /*

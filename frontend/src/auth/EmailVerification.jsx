@@ -3,18 +3,20 @@ import { useParams } from "react-router-dom";
 import API from "../config/apiConfig";
 
 const EmailVerification = () => {
-  const { token } = useParams(); // Assuming token is passed as a URL parameter
+  const { id, hash } = useParams();
   const [verificationStatus, setVerificationStatus] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [resendStatus, setResendStatus] = useState(false);
 
   const verifyEmail = async () => {
     setLoading(true);
     try {
-      const response = await API.post("auth/verify-email", { token });
+      const response = await API.get(`/email/verify/${id}/${hash}`);
       setVerificationStatus("Email verified successfully");
       console.log("Email verification successful", response.data);
     } catch (error) {
       setVerificationStatus("Email verification failed");
+      setResendStatus(true);
       console.error(
         "Email verification failed",
         error.response?.data || error.message
@@ -37,6 +39,16 @@ const EmailVerification = () => {
           <p className="text-center">Verifying...</p>
         ) : (
           <p className="text-center">{verificationStatus}</p>
+        )}
+        {resendStatus && (
+          <div className="w-full text-nowrap text-center py-4">
+            <a
+              className=" bg-blue-500 px-2 py-2 rounded-md text-xl hover:bg-blue-600"
+              href=""
+            >
+              Resend verification code
+            </a>
+          </div>
         )}
       </div>
     </div>
