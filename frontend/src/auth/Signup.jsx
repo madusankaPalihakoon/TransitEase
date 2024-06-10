@@ -3,9 +3,9 @@ import API from "../config/apiConfig";
 import {
   openErrorNotification,
   openSuccessNotification,
-} from "../Util/notificationUtils.js";
-import { logErrors } from "../Util/errorHandler.js";
-import { setItem } from "../Util/handleStorage.js";
+} from "../util/notificationHandler.js";
+import { logErrors } from "../util/errorHandler.js";
+import { setItem } from "../util/handleStorage.js";
 
 const Signup = () => {
   const [formData, setFormData] = useState({

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { openErrorNotification } from "../Util/notificationUtils.js";
+import { openErrorNotification } from "../util/notificationHandler.js";
 
 // Create an Axios instance with default configuration
 const API = axios.create({

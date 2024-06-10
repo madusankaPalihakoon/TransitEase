@@ -1,4 +1,4 @@
-import { openErrorNotification } from "./notificationUtils.js";
+import { openErrorNotification } from "./notificationHandler.js";
 
 // errorHandler.js
 export const logErrors = (error) => {

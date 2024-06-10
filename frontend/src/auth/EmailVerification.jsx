@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getItem, removeItem } from "../Util/handleStorage.js";
+import { getItem, removeItem } from "../util/handleStorage.js";
 import API, { setAuthToken } from "../config/apiConfig";
 import {
   openErrorNotification,
   openSuccessNotification,
-} from "../Util/notificationUtils.js";
+} from "../util/notificationHandler.js";
 
 const EmailVerification = () => {
   const { id, hash } = useParams();

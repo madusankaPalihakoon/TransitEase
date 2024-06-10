@@ -3,7 +3,7 @@ import Logo from "../assets/logo/logo-sm.png";
 import ClockIcon from "../assets/icon/clock.svg";
 import CalenderIcon from "../assets/icon/calendar.svg";
 
-function Home() {
+export default function Index() {
   const [dateState, setDateState] = useState(new Date());
   useEffect(() => {
     setInterval(() => setDateState(new Date()), 30000);
@@ -58,5 +58,3 @@ function Home() {
     </div>
   );
 }
-
-export default Home;

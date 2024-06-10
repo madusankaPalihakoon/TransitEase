@@ -1,4 +1,3 @@
-// notificationUtils.js
 import { notification } from "antd";
 
 export const openErrorNotification = (message, description) => {

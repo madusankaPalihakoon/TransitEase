@@ -1,6 +1,4 @@
-import React from "react";
-
-function DashboardHome() {
+export default function DashboardHome() {
   return (
     <div className=" w-full h-auto bg-yellow-100">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem ad
@@ -9,5 +7,3 @@ function DashboardHome() {
     </div>
   );
 }
-
-export default DashboardHome;

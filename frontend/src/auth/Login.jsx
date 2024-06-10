@@ -5,8 +5,8 @@ import {
   openSuccessNotification,
   openErrorNotification,
   openInfoNotification,
-} from "../Util/notificationUtils.js";
-import { getUser, setItem, setUser } from "../Util/handleStorage.js";
+} from "../util/notificationHandler.js";
+import { getUser, setItem, setUser } from "../util/handleStorage.js";
 
 const Login = () => {
   const [formData, setFormData] = useState({

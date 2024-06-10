@@ -20,6 +20,11 @@ export const setUser = (data) => {
 };
 
 export const getUser = () => {
-  const user = localStorage.getItem("user");
-  return user ? JSON.parse(user) : [];
+  try {
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+  } catch (error) {
+    console.error("Error parsing user data from localStorage:", error);
+    return null;
+  }
 };
