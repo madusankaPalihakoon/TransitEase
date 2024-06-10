@@ -1,5 +1,11 @@
 import { useState } from "react";
 import API from "../config/apiConfig";
+import {
+  openErrorNotification,
+  openSuccessNotification,
+} from "../Util/notificationUtils.js";
+import { logErrors } from "../Util/errorHandler.js";
+import { setItem } from "../Util/handleStorage.js";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +19,8 @@ const Signup = () => {
   const { name, email, nic, password, password_confirmation } = formData;
 
   const handleChange = (e) => {
+    e.preventDefault();
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -22,19 +30,15 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== password_confirmation) {
-      alert("Passwords do not match");
+      openErrorNotification("Password and confirmation do not match");
       return;
     }
     try {
       const response = await API.post("/register", formData);
-      console.log("Registration successful", response.data);
-      // Handle success, e.g., redirect or show a success message
+      openSuccessNotification(response.data.message);
+      setItem("token", response.data.token);
     } catch (error) {
-      console.error(
-        "Registration failed",
-        error.response?.data || error.message
-      );
-      // Handle error, e.g., show error messages
+      logErrors(error);
     }
   };
 

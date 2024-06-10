@@ -1,7 +1,6 @@
 import axios from "axios";
-import { openErrorNotification } from "../Util/notificationUtils.js";
 
-// Create an Axios instance with default configuration
+// Base URL configuration
 const API = axios.create({
   baseURL: "http://127.0.0.1:8000/api",
   headers: {
@@ -18,16 +17,5 @@ export const setAuthToken = (token) => {
     delete API.defaults.headers.common["Authorization"];
   }
 };
-
-// Global error handling
-API.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.code === "ERR_NETWORK") {
-      openErrorNotification("Internal serve error, please tray again later!");
-    }
-    return Promise.reject(error.response.data);
-  }
-);
 
 export default API;

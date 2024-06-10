@@ -1,5 +1,12 @@
 import { useState } from "react";
 import API from "../config/apiConfig";
+import { useActionData, useNavigate } from "react-router-dom";
+import {
+  openSuccessNotification,
+  openErrorNotification,
+  openInfoNotification,
+} from "../Util/notificationUtils.js";
+import { getUser, setItem, setUser } from "../Util/handleStorage.js";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -16,15 +23,30 @@ const Login = () => {
     });
   };
 
+  const navigate = useNavigate();
+  const redirectToDashboard = () => {
+    navigate("/dashboard/home");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await API.post("auth/login", formData);
+      const response = await API.post("/login", formData);
       console.log("Login successful", response.data);
-      // Handle success, e.g., redirect or show a success message
+      openSuccessNotification("Login successful");
+      setItem("token", response.data.token);
+      setUser(response.data.user);
+      redirectToDashboard();
     } catch (error) {
-      console.error("Login failed", error.response?.data || error.message);
-      // Handle error, e.g., show error messages
+      if (error.message === "Email not verified") {
+        openInfoNotification(
+          "Email not verified",
+          "we'll send a verification code to the email address you used to create the account"
+        );
+        return;
+      }
+      console.error(error.message);
+      openErrorNotification(error.message);
     }
   };
 

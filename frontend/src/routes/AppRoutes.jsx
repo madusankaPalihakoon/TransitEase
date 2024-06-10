@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
@@ -12,6 +11,7 @@ import Shop from "../dashboard/Shop";
 import Vehicle from "../dashboard/Vehicle";
 import Report from "../dashboard/Report";
 import Setting from "../dashboard/Setting";
+import { getItem, getUser } from "../Util/handleStorage";
 
 const AppRoutes = () => {
   return (

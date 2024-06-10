@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import {
   HomeIcon,
@@ -10,7 +9,6 @@ import {
   ArrowLeftStartOnRectangleIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
-import AppRoutes from "../routes/AppRoutes";
 
 function Dashboard() {
   return (
@@ -55,19 +53,20 @@ function Dashboard() {
         <div className="flex mt-10 gap-2 flex-wrap">
           <a
             className="text-black hover:scale-105 transition ease-in delay-125 p-1 rounded-md text-xl font-bold w-full h-fit flex justify-center"
-            href=""
+            href="/logout"
           >
             <ArrowLeftStartOnRectangleIcon className="h-10 w-10" />
           </a>
           <a
             className="text-black hover:scale-105 transition ease-in delay-125 p-1 rounded-md text-xl font-bold w-full h-fit flex justify-center"
-            href=""
+            href="/profile"
           >
             <UserCircleIcon className="h-10 w-10" />
           </a>
         </div>
       </div>
       <div className="w-full h-full flex-grow p-2 bg-blue-200">
+        {/* outlet for dashboard content routes */}
         <Outlet />
       </div>
     </div>
