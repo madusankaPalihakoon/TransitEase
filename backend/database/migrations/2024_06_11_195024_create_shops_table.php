@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->string('shop_id');
+            $table->string('shop_id')->unique();
             $table->string('name');
             $table->string('email')->nullable();
+            $table->string('phone')->unique();
             $table->string('address');
             $table->string('town');
-            $table->enum('business',['wholesale','retail'])->default('retail');
+            $table->enum('business', ['wholesale', 'retail'])->default('retail');
             $table->enum('business_status', ['active', 'close']);
             $table->timestamps();
         });

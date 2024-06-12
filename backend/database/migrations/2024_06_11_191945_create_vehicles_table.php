@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('number');
             $table->string('owner');
-            $table->string('contact')->nullable();
+            $table->string('phone')->nullable();
             $table->date('insurance_renewal_date');
             $table->date('emission_teste_date');
             $table->date('revenue_licence_date');
-            $table->enum('documents',['clear', 'leasing'])->default('clear');
+            $table->enum('documents', ['clear', 'leasing'])->default('clear');
             $table->timestamps();
         });
     }

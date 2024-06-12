@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class AuthController extends Controller
 {
@@ -21,7 +22,7 @@ class AuthController extends Controller
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:8|confirmed',
             ]);
-    
+
             // Create user
             $user = User::create([
                 'name' => $request->name,
@@ -40,7 +41,7 @@ class AuthController extends Controller
                 'status' => true,
                 'message' => 'Registration successful! Please check your email to verify your account.',
                 'token' => $token,
-            ],201);
+            ], 201);
         } catch (ValidationException $e) {
             return response()->json([
                 'status' => false,
@@ -63,20 +64,30 @@ class AuthController extends Controller
         ]);
 
         try {
-            // JWTAuth attempt
-            if (!$token = JWTAuth::attempt($request->only('email', 'password'))) {
+            // Find the user by email
+            $user = User::where('email', $request->email)->first();
+
+            // Check if the user exists
+            if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid credentials',
-                ], 401); // Unauthorized
+                    'message' => 'User not found',
+                ], 404); // Not Found
             }
 
-            $user = auth()->user();
-
+            // Check if the user has a verified email
             if (!$user->hasVerifiedEmail()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Email not verified',
+                ], 401); // Unauthorized
+            }
+
+            // Attempt to generate JWT token
+            if (!$token = JWTAuth::attempt($request->only('email', 'password'))) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid credentials',
                 ], 401); // Unauthorized
             }
 
@@ -85,7 +96,7 @@ class AuthController extends Controller
                 'status' => true,
                 'message' => 'User logged in successfully',
                 'token' => $token,
-                'user'=>$user,
+                'user' => $user,
             ]);
         } catch (JWTException $e) {
             return response()->json([
@@ -95,19 +106,20 @@ class AuthController extends Controller
         }
     }
 
+
     public function profile()
     {
         try {
             // Check if user is authenticated
             $user = auth()->user();
-    
+
             if (!$user) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Unauthorized',
                 ], 401);
             }
-    
+
             // Response
             return response()->json([
                 'status' => true,
@@ -122,13 +134,13 @@ class AuthController extends Controller
             ], 500);
         }
     }
-    
+
 
     public function refreshToken()
     {
         try {
-            // Attempt to refresh the token
-            $newToken = auth()->refresh();
+            // Attempt to refresh the token using the current token
+            $newToken = JWTAuth::refresh();
 
             // Response with the new token
             return response()->json([
@@ -146,12 +158,13 @@ class AuthController extends Controller
         }
     }
 
+
     public function logout()
     {
         try {
             // Attempt to invalidate the token
             auth()->logout();
-    
+
             // Response
             return response()->json([
                 'status' => true,

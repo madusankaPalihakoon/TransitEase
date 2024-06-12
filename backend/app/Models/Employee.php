@@ -9,7 +9,7 @@ class Employee extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['employee_id', 'name', 'email','phone', 'position', 'salary','bank','account','working_status','appointment_date'];
+    protected $fillable = ['employee_id', 'name', 'nic', 'email', 'phone', 'position', 'salary', 'bank', 'account', 'working_status', 'appointment_date'];
 
     // Method to generate the unique employee ID
     public static function generateEmployeeId()
