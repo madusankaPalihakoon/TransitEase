@@ -1,9 +1,19 @@
+import { useState, useEffect } from "react";
+import { PrinterFilled } from "@ant-design/icons";
+import CardPlaceholder from "../components/CardPlaceholder";
+
 export default function DashboardHome() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
   return (
-    <div className=" w-full h-auto bg-yellow-100">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem ad
-      beatae autem esse id illo deserunt voluptas fugit corporis? Numquam
-      quibusdam sit odit ipsa blanditiis deleniti magnam voluptas impedit error.
+    <div className=" flex w-full p-4 h-fit flex-wrap justify-center gap-7">
+      <CardPlaceholder />
+      <CardPlaceholder />
+      <CardPlaceholder />
     </div>
   );
 }

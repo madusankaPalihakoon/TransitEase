@@ -5,7 +5,7 @@ export default function DashboardLayout() {
   return (
     <div className="flex w-screen h-screen">
       <Nav />
-      <div className="w-full h-full flex-grow p-2 bg-blue-200">
+      <div className="w-full h-full flex bg-white">
         <Outlet />
       </div>
     </div>

@@ -12,7 +12,7 @@ export const getItem = (key) => {
 };
 
 export const removeItem = (key) => {
-  return localStorage.removeItem(key);
+  localStorage.removeItem(key);
 };
 
 export const setUser = (data) => {
