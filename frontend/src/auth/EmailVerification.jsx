@@ -8,7 +8,7 @@ import {
 } from "../util/notificationHandler.js";
 
 const EmailVerification = () => {
-  const { id, hash } = useParams();
+  const { id, hash, expires } = useParams();
   const [verificationStatus, setVerificationStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [resendStatus, setResendStatus] = useState(false);
@@ -21,7 +21,7 @@ const EmailVerification = () => {
     try {
       const token = getItem("token");
       setAuthToken(token);
-      const response = await API.post("/email/resend");
+      const response = await API.post("/verify");
       console.log(response);
     } catch (error) {
       openErrorNotification("Email verification failed");
@@ -33,12 +33,12 @@ const EmailVerification = () => {
     try {
       const token = getItem("token");
       setAuthToken(token);
-      const response = await API.get(`/email/verify/${id}/${hash}`);
+      const response = await API.get(`/verify/${id}/${hash}/${expires}`);
       setVerificationStatus("Email verified successfully");
       openSuccessNotification("Email verified successfully");
       removeItem("token");
       redirectToLogin();
-      // console.log("Email verification successful", response.data);
+      console.log("Email verification successful", response.data);
     } catch (error) {
       setVerificationStatus("Email verification failed");
       setResendStatus(true);

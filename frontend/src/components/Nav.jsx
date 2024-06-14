@@ -15,31 +15,31 @@ export default function Nav() {
     <div className="flex flex-col h-screen bg-gray-50 w-20 justify-center gap-6">
       <NavLink
         className="text-black hover:scale-105 transition ease-in delay-125 p-1 rounded-md text-xl font-bold w-full h-fit flex justify-center"
-        to="/dashboard/"
+        to="/dashboard"
       >
         <HomeIcon className="h-10 w-10" />
       </NavLink>
       <NavLink
         className="text-black hover:scale-105 transition ease-in delay-125 p-1 rounded-md text-xl font-bold w-full h-fit flex justify-center"
-        to="/dashboard/employees"
+        to="/dashboard/employee"
       >
         <UsersIcon className="h-10 w-10" />
       </NavLink>
       <NavLink
         className="text-black hover:scale-105 transition ease-in delay-125 p-1 rounded-md text-xl font-bold w-full h-fit flex justify-center"
-        to="/dashboard/shops"
+        to="/dashboard/shop"
       >
         <BuildingStorefrontIcon className="h-10 w-10" />
       </NavLink>
       <NavLink
         className="text-black hover:scale-105 transition ease-in delay-125 p-1 rounded-md text-xl font-bold w-full h-fit flex justify-center"
-        to="/dashboard/vehicles"
+        to="/dashboard/vehicle"
       >
         <TruckIcon className="h-10 w-10" />
       </NavLink>
       <NavLink
         className="text-black hover:scale-105 transition ease-in delay-125 p-1 rounded-md text-xl font-bold w-full h-fit flex justify-center"
-        to="/dashboard/reports"
+        to="/dashboard/report"
       >
         <BookOpenIcon className="h-10 w-10" />
       </NavLink>

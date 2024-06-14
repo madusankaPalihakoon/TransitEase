@@ -1,18 +1,15 @@
-import API, { setAuthToken } from "../../config/apiConfig";
-import { getItem } from "../../util/handleStorage";
 import { useState } from "react";
+import axios from "axios";
 
-export default function AddEmployee() {
+const AddShop = () => {
   const [formData, setFormData] = useState({
     name: "",
-    nic: "",
     email: "",
     phone: "",
-    position: "",
-    salary: "",
-    bank: "",
-    account: "",
-    working_status: "working", // default value
+    address: "",
+    town: "",
+    business: "retail", // default value
+    business_status: "active", // default value
   });
 
   const handleChange = (e) => {
@@ -22,30 +19,16 @@ export default function AddEmployee() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = getItem("token");
-      setAuthToken(token);
-      const response = await API.post("/employee", formData);
-      console.log(response);
-      // Optionally, clear the form after successful submission
-      setFormData({
-        name: "",
-        nic: "",
-        email: "",
-        phone: "",
-        position: "",
-        salary: "",
-        bank: "",
-        account: "",
-        working_status: "working",
-      });
-      // Add any additional logic after successful submission (e.g., redirect, show success message)
+      await axios.post("/api/shops", formData); // Assuming endpoint '/api/shops' for creating shop
+      // Handle success, maybe show a success message or redirect
     } catch (error) {
-      console.log(error);
+      // Handle error, show error message to the user
     }
   };
+
   return (
     <div className="max-w-md mx-auto">
-      <h2 className="text-2xl font-semibold mb-4">Add New Employee</h2>
+      <h2 className="text-2xl font-semibold mb-4">Add New Shop</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="name" className="block mb-1">
@@ -54,21 +37,8 @@ export default function AddEmployee() {
           <input
             type="text"
             name="name"
-            id="name"
             className="w-full border border-gray-300 rounded-md py-2 px-3"
             value={formData.name}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="nic" className="block mb-1">
-            NIC
-          </label>
-          <input
-            type="text"
-            name="nic"
-            className="w-full border border-gray-300 rounded-md py-2 px-3"
-            value={formData.nic}
             onChange={handleChange}
           />
         </div>
@@ -97,66 +67,55 @@ export default function AddEmployee() {
           />
         </div>
         <div>
-          <label htmlFor="position" className="block mb-1">
-            Position
+          <label htmlFor="address" className="block mb-1">
+            Address
           </label>
           <input
             type="text"
-            name="position"
+            name="address"
             className="w-full border border-gray-300 rounded-md py-2 px-3"
-            value={formData.position}
+            value={formData.address}
             onChange={handleChange}
           />
         </div>
         <div>
-          <label htmlFor="salary" className="block mb-1">
-            Salary
-          </label>
-          <input
-            type="number"
-            name="salary"
-            step="0.01"
-            className="w-full border border-gray-300 rounded-md py-2 px-3"
-            value={formData.salary}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="bank" className="block mb-1">
-            Bank
+          <label htmlFor="town" className="block mb-1">
+            Town
           </label>
           <input
             type="text"
-            name="bank"
+            name="town"
             className="w-full border border-gray-300 rounded-md py-2 px-3"
-            value={formData.bank}
+            value={formData.town}
             onChange={handleChange}
           />
         </div>
         <div>
-          <label htmlFor="account" className="block mb-1">
-            Account
-          </label>
-          <input
-            type="text"
-            name="account"
-            className="w-full border border-gray-300 rounded-md py-2 px-3"
-            value={formData.account}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="working_status" className="block mb-1">
-            Working Status
+          <label htmlFor="business" className="block mb-1">
+            Business Type
           </label>
           <select
-            name="working_status"
+            name="business"
             className="w-full border border-gray-300 rounded-md py-2 px-3"
-            value={formData.working_status}
+            value={formData.business}
             onChange={handleChange}
           >
-            <option value="working">Working</option>
-            <option value="retired">Retired</option>
+            <option value="retail">Retail</option>
+            <option value="wholesale">Wholesale</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="business_status" className="block mb-1">
+            Business Status
+          </label>
+          <select
+            name="business_status"
+            className="w-full border border-gray-300 rounded-md py-2 px-3"
+            value={formData.business_status}
+            onChange={handleChange}
+          >
+            <option value="active">Active</option>
+            <option value="close">Close</option>
           </select>
         </div>
         <div>
@@ -170,4 +129,6 @@ export default function AddEmployee() {
       </form>
     </div>
   );
-}
+};
+
+export default AddShop;

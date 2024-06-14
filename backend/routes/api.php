@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\VehicleController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,17 +17,20 @@ use App\Http\Controllers\VehicleController;
 |
 */
 
-Route::post("register", [AuthController::class, "register"]);
-Route::post("login", [AuthController::class, "login"]);
+Route::post("register", [AuthController::class, "register"]); //register api
+Route::post("login", [AuthController::class, "login"]); //login api
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify']);
-    Route::post('/email/resend', [EmailVerificationController::class, 'resend']);
+    // this all api can access only using valid Authorization Bearer token using only
+    Route::get('/verify/{id}/{hash}/{expires}', [EmailVerificationController::class, 'verify']);
+    Route::post('/verify', [EmailVerificationController::class, 'resend']);
+
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::get('/refresh', [AuthController::class, 'refreshToken']);
     Route::get('/logout', [AuthController::class, 'logout']);
 
     Route::middleware('verified')->group(function () {
+        // this all api can access only using valid Authorization Bearer token and this token user has been email verified
         Route::post('/employee/store', [EmployeeController::class, 'store']);
         Route::get('/employees', [EmployeeController::class, 'index']);
         Route::get('/employee/{employee_id}', [EmployeeController::class, 'show']);

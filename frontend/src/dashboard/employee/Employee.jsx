@@ -1,5 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
+import { getItem } from "../../util/handleStorage";
 export default function Employee() {
+  const token = getItem("token");
   return (
     <div className=" flex w-full p-4 justify-start h-fit flex-wrap gap-2">
       <h2>Employee</h2>

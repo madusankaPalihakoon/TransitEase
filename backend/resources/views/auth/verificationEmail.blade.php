@@ -81,7 +81,6 @@
             </div>
             <div class="content">
                 <h1>Email Verification</h1>
-                <p>Dear {{ $user->name }},</p>
                 <p>Thank you for signing up with TransitEase! Please verify your email address by clicking the button
                     below:</p>
                 <div class="button-container">
